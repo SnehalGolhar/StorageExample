@@ -1,55 +1,92 @@
 package com.example.vaibhav.storageexample;
 
+import android.app.AlertDialog;
 import android.content.ContentValues;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class SqliteActivity extends AppCompatActivity {
-    EditText ed1,ed2,ed3;
-
+    EditText ed1;
+    public int counter=0;
+    private SimpleDateFormat s=new SimpleDateFormat("MM/dd/yyyy-hh:mm a");
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sqlite);
-        ed1=(EditText)findViewById(R.id.txtDesc);
-        final String tablename = "MYTable";
-        final String TEXT_TYPE = " TEXT";
-        final String COMMA_SEP = ",";
-        final String strid= "entryid";
-        final String strdesc = "description";
-        final String SQL_CREATE_ENTRIES =
-                "CREATE TABLE " + tablename + " (" +
-                       // strid + " INTEGER PRIMARY KEY," +
-                        strdesc+ TEXT_TYPE + " )";
-        //TO save information in Sqlite class
+
         final Button btnSave = (Button) findViewById(R.id.btnSave);
         btnSave.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                ed1=(EditText)findViewById(R.id.txtdescsqlite);
+                String strdescval=ed1.getText().toString();
 
-              /*  String strdescr  = ed1.getText().toString();
+                if(strdescval!="")
+                {
+                    DBHandler dataController = new DBHandler(getBaseContext());
+                    dataController.open();
+                    long retValue = dataController.insert(strdescval);
+                    dataController.close();
+                    if (retValue != -1) {
+                        context = getApplicationContext();
+                        CharSequence text = "Data saved successfully";
+                        int duration = Toast.LENGTH_LONG;
+                        Toast.makeText(context, text, duration).show();
 
-// Gets the data repository in write mode
-                SQLiteDatabase db ;
-// Create a new map of values, where column names are the keys
-                ContentValues values = new ContentValues();
-                values.put(strdesc, strdescr);
+                        try {
+                            counter += 1;
+                            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putInt("SQL_COUNTER", counter);
+                            editor.commit();
+                            OutputStreamWriter out = new OutputStreamWriter(openFileOutput(PreferenceActivity.STORE_PREFERENCES, MODE_APPEND));
+                            out.write("\nSQLite " + counter + ", " + s.format(new Date()));
+                            out.close();
+                            Intent intent = new Intent(context, MainActivity.class);
+                            startActivity(intent);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
 
-// Insert the new row, returning the primary key value of the new row
-                 db.insert(
-                        tablename,
-                        values);*/
+
+                }
+                else
+                {
+
+                    AlertDialog alertDialog = new AlertDialog.Builder(SqliteActivity.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("Please enter values in required field");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
+                }
+
+
+
             }
         });
-
-
-        //TO save information in Sqlite class
-        final Button btnCancel = (Button) findViewById(R.id.btnCancel);
+                //TO save information in Sqlite class
+                final Button btnCancel = (Button) findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
@@ -57,5 +94,14 @@ public class SqliteActivity extends AppCompatActivity {
         });
 
 
+    }
+
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        counter=sharedPrefs.getInt("SQL_COUNTER", 0);
     }
 }

@@ -7,14 +7,19 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@android:color/holo_green_dark"
     tools:context="com.example.vaibhav.storageexample.PreferenceActivity">
 
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Prefernces storage view"
-        android:id="@+id/textView" />
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="PREFERENCE EXAMPLE"
+        android:id="@+id/textView5"
+        android:layout_alignBottom="@+id/txtbookname"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -31,6 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtBookname"
+        android:hint="Max. 70 chracters only"
         android:layout_alignTop="@+id/txtbookname"
         android:layout_toRightOf="@+id/textView"
         android:layout_alignParentRight="true"
@@ -51,6 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/txtAuthor"
+        android:hint="Max. 70 chracters only"
         android:layout_alignBottom="@+id/textView2"
         android:layout_alignLeft="@+id/txtBookname"
         android:layout_alignStart="@+id/txtBookname"
@@ -74,6 +81,7 @@
         android:inputType="textMultiLine"
         android:ems="10"
         android:id="@+id/txtDesc"
+        android:hint="Maximum 255 chracters only"
         android:layout_alignTop="@+id/textView3"
         android:layout_alignLeft="@+id/txtAuthor"
         android:layout_alignStart="@+id/txtAuthor" />
@@ -86,6 +94,7 @@
         android:layout_marginBottom="43dp"
         android:layout_alignParentBottom="true"
         android:layout_alignRight="@+id/textView3"
+        android:background="@android:color/holo_orange_dark"
         android:layout_alignEnd="@+id/textView3" />
 
     <Button
@@ -96,6 +105,7 @@
         android:layout_alignTop="@+id/btnSave"
         android:layout_alignRight="@+id/txtDesc"
         android:layout_alignEnd="@+id/txtDesc"
+        android:background="@android:color/holo_orange_dark"
         android:layout_marginRight="44dp"
         android:layout_marginEnd="44dp" />
 
