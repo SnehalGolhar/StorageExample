@@ -89,6 +89,9 @@ public class SqliteActivity extends AppCompatActivity {
                 final Button btnCancel = (Button) findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                Intent intent = new Intent(context,MainActivity.class);
+                startActivity(intent);
+
 
             }
         });

@@ -57,14 +57,14 @@ public class MainActivity extends AppCompatActivity {
                 InputStreamReader tmp=new InputStreamReader(in);
                 BufferedReader reader=new BufferedReader(tmp);
                 String str;
-                StringBuilder buf=new StringBuilder();
+                StringBuilder objstrbuf=new StringBuilder();
                 while((str=reader.readLine())!=null)
                 {
-                    buf.append(str + "\n");
+                    objstrbuf.append(str + "\n");
                 }
                 in.close();
                 TextView savedData=(TextView)findViewById(R.id.txtData);
-                savedData.setText(buf.toString());
+                savedData.setText(objstrbuf.toString());
             }
         }
         catch(Exception e)

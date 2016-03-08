@@ -17,8 +17,6 @@ public class DBHandler {
     public static final String TABLE_NAME="Book_Table";
     public static final String DATABASE_NAME="storageExample.db";
     public static final String TABLE_CREATE="create table Book_Table (Message text not null);";
-
-
     DataBaseHelper dbHelper;
     Context context;
     SQLiteDatabase db;
