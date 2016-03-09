@@ -48,29 +48,45 @@ public class PreferenceActivity extends MainActivity {
                 String bookname  = ed1.getText().toString();
                 String authorename  = ed2.getText().toString();
                 String description  = ed3.getText().toString();
+                if (bookname.isEmpty() || authorename.isEmpty() ||  description.isEmpty())
+                {
 
-                SharedPreferences objSharedpreferences=getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
-
-                SharedPreferences.Editor editor = objSharedpreferences.edit();
-
-                editor.putString(BookName, bookname);
-                String booknameval = objSharedpreferences.getString(BookName, "");
-                editor.putString(BookAuthor, authorename);
-                String authornameval = objSharedpreferences.getString(BookAuthor, "");
-                editor.putString(BookDesc, description);
-                String descriptionval = objSharedpreferences.getString(BookDesc, "");
-                editor.apply();
-                Toast.makeText(PreferenceActivity.this,"The data is saved ", Toast.LENGTH_LONG).show();
+                    AlertDialog alertDialog = new AlertDialog.Builder(PreferenceActivity.this).create();
+                    alertDialog.setTitle("Alert");
+                    alertDialog.setMessage("Please enter values in required field");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    alertDialog.show();
 
 
-                if (booknameval != null && authornameval != null && descriptionval != null) {
+                }
+
+                else
+                {
                     try {
+                        SharedPreferences objSharedpreferences=getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
+                        SharedPreferences.Editor editor = objSharedpreferences.edit();
+
+                        editor.putString(BookName, bookname);
+
+                        editor.putString(BookAuthor, authorename);
+
+                        editor.putString(BookDesc, description);
+
+                        editor.apply();
+
                         counter += 1;
 
                         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
                         SharedPreferences.Editor editor1 = sharedPreferences.edit();
                         editor1.putInt("COUNTER", counter);
                         editor1.commit();
+                        Toast.makeText(PreferenceActivity.this,"The data is saved ", Toast.LENGTH_LONG).show();
 
                         OutputStreamWriter out = new OutputStreamWriter(openFileOutput(STORE_PREFERENCES, MODE_APPEND));
                         String message = "\nPreference " + counter + "," + s.format(new Date());
@@ -84,21 +100,7 @@ public class PreferenceActivity extends MainActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
 
-                else
-                {
-
-                    AlertDialog alertDialog = new AlertDialog.Builder(PreferenceActivity.this).create();
-                    alertDialog.setTitle("Alert");
-                    alertDialog.setMessage("Please enter values in required field");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alertDialog.show();
                 }
 
 
