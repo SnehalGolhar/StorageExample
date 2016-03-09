@@ -36,7 +36,7 @@ public class SqliteActivity extends AppCompatActivity {
                 ed1=(EditText)findViewById(R.id.txtdescsqlite);
                 String strdescval=ed1.getText().toString();
 
-                if(strdescval!="")
+                if(!strdescval.isEmpty())
                 {
                     DBHandler dataController = new DBHandler(getBaseContext());
                     dataController.open();
@@ -87,8 +87,9 @@ public class SqliteActivity extends AppCompatActivity {
         });
                 //TO save information in Sqlite class
                 final Button btnCancel = (Button) findViewById(R.id.btnCancel);
-        btnCancel.setOnClickListener(new View.OnClickListener() {
+                     btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                context = getApplicationContext();
                 Intent intent = new Intent(context,MainActivity.class);
                 startActivity(intent);
 
